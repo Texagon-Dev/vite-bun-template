@@ -23,23 +23,23 @@ RUN bun run build
 # CMD ["httpd", "-f", "-p", "3000", "-h", "/app"]
 
 # size only 48MB
-# FROM nginx:alpine
+FROM nginx:alpine
 
-# COPY --from=build /app/dist /usr/share/nginx/html
+COPY --from=build /app/dist /usr/share/nginx/html
 
-# EXPOSE 80
+EXPOSE 80
 
-# CMD ["nginx", "-g", "daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]
 
 # size arround 184MB
-FROM oven/bun:1.2.19-slim
+# FROM oven/bun:1.2.19-slim
 
-WORKDIR /app
+# WORKDIR /app
 
-COPY --from=build /app/dist /app/dist
+# COPY --from=build /app/dist /app/dist
 
-RUN bun install -g serve
+# RUN bun install -g serve
 
-EXPOSE 3000
+# EXPOSE 3000
 
-CMD ["serve", "-s", "dist", "-l", "3000"]
+# CMD ["serve", "-s", "dist", "-l", "3000"]
