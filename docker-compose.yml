@@ -7,8 +7,8 @@ services:
       - '3000:3000'
     volumes:
       - .:/app
-      - /app/node_modules # prevent node_modules from being overwritten
+      - /app/node_modules
     environment:
       NODE_ENV: development
-      CHOKIDAR_USEPOLLING: 'true' # Enable polling to detect file changes in Docker
+      CHOKIDAR_USEPOLLING: 'true'
     command: ['bun', 'run', 'dev']
