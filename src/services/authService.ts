@@ -26,7 +26,7 @@ class AuthService {
         credentials.password
       )
 
-      if (response.success && response.data) {
+      if (response.success && response.data != null) {
         localStorage.setItem('authToken', response.data.token)
 
         return response.data.user
@@ -46,7 +46,7 @@ class AuthService {
         credentials.password
       )
 
-      if (response.success && response.data) {
+      if (response.success && response.data != null) {
         localStorage.setItem('authToken', response.data.token)
 
         return response.data.user

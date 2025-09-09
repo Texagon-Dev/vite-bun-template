@@ -1,7 +1,8 @@
 import { Outlet, useLocation } from 'react-router-dom'
-import { useAppStore } from '@/stores/useAppStore'
+
 import { Layout } from '@/components/layout/Layout'
 import { cn } from '@/lib/utils'
+import { useAppStore } from '@/stores/useAppStore'
 
 function App() {
   const { theme } = useAppStore()

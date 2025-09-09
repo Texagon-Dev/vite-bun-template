@@ -1,9 +1,10 @@
+import { Menu, X, User, LogOut, Settings, Sun, Moon } from 'lucide-react'
 import { useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
-import { Menu, X, User, LogOut, Settings, Sun, Moon } from 'lucide-react'
+
 import { Button } from '@/components/ui/button'
-import { useAppStore } from '@/stores/useAppStore'
 import { cn } from '@/lib/utils'
+import { useAppStore } from '@/stores/useAppStore'
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)

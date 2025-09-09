@@ -1,6 +1,8 @@
-import { type ReactNode } from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
+
 import { useAppStore } from '@/stores/useAppStore'
+
+import type { ReactNode } from 'react'
 
 interface AuthGuardProps {
   children: ReactNode
@@ -19,5 +21,5 @@ export function AuthGuard({ children, requireAuth = true }: AuthGuardProps) {
     return <Navigate to="/dashboard" replace />
   }
 
-  return <>{children}</>
+  return children
 }

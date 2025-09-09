@@ -1,15 +1,15 @@
-# Vite React Template
+# Vite React Template (Bun)
 
-A modern, production-ready React template built with **Vite 7**, **React 18**, **TypeScript**, and a carefully curated set of tools and libraries for rapid development.
+A modern, production-ready React template built with **Vite 7**, **React 19**, **TypeScript**, and a carefully curated toolchain for rapid development. This repo is Bun-only.
 
 ## 🚀 Features
 
 - ⚡️ **Vite 7** - Lightning fast build tool with HMR
-- ⚛️ **React 18** - Latest React with concurrent features
+- ⚛️ **React 19** - Latest React
 - 🔷 **TypeScript** - Type safety and enhanced developer experience
 - 🎨 **Tailwind CSS** - Utility-first CSS framework
 - 🧩 **ShadCN UI** - Beautiful, accessible component library
-- 🛣️ **React Router DOM v7.7.1** - Client-side routing
+- 🛣️ **React Router DOM v7** - Client-side routing
 - 🐻 **Zustand** - Lightweight state management
 - 🔧 **ESLint & Prettier** - Code linting and formatting
 - 📱 **Responsive Design** - Mobile-first approach
@@ -48,33 +48,49 @@ A modern, production-ready React template built with **Vite 7**, **React 18**, *
 ## 🏗️ Project Structure
 
 ```
+.vscode/                    # Workspace settings and recommendations
+public/                     # Static assets served at /
 src/
-├── components/          # Reusable UI components
-│   ├── auth/           # Authentication components
-│   ├── layout/         # Layout components (Header, Footer)
-│   ├── shared/         # Shared utility components
-│   └── ui/             # Base UI components (Button, Card, etc.)
-├── contexts/           # React contexts
-├── data/              # Constants and static data
-├── hooks/             # Custom React hooks
-├── lib/               # Utility libraries and configurations
-├── pages/             # Page components
-│   ├── dashboard/     # Dashboard page
-│   ├── landing/       # Landing page
-│   ├── login/         # Login page
-│   └── signup/        # Signup page
-├── services/          # API services and external integrations
-├── stores/            # Zustand stores
-├── utils/             # Utility functions
-└── main.tsx           # Application entry point
+├── App.tsx                 # App shell selecting layout or bare auth views
+├── index.css               # Global CSS (Tailwind)
+├── main.tsx                # React root + RouterProvider
+├── components/
+│   ├── auth/               # AuthGuard, AuthProvider
+│   ├── layout/             # Header, Footer, Layout
+│   ├── shared/             # ErrorBoundary, Loading, Notification
+│   └── ui/                 # Button, Card primitives, etc.
+├── contexts/               # Optional contexts (ThemeContext)
+├── data/                   # Constants and static data
+├── hooks/                  # Custom hooks (e.g., useLocalStorage)
+├── lib/                    # api client, router, utilities
+│   ├── api.ts              # API client + mock API
+│   ├── router.tsx          # Central routes (Home, Login, Signup)
+│   └── utils.ts            # Helpers (e.g., cn)
+├── pages/
+│   ├── HomePage.tsx        # Homepage (hero, features, CTA)
+│   ├── login/              # LoginPage.tsx
+│   └── signup/             # SignupPage.tsx
+├── stores/                 # Zustand stores
+│   └── useAppStore.ts      # theme/user/loading; persists theme and toggles <html>.dark
+└── vite-env.d.ts
 ```
+
+Where to put what
+- UI primitives: `src/components/ui/`
+- App shell pieces (header/footer/layout): `src/components/layout/`
+- Page-level components: `src/pages/`
+- Routing: `src/lib/router.tsx`
+- State: `src/stores/` (Zustand slices)
+- API/client services: `src/lib/api.ts`
+- Constants: `src/data/`
+- Hooks: `src/hooks/`
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-- Node.js 18+
-- npm, yarn, or pnpm
+- Bun 1.2.x (https://bun.sh)
+- Node 18+ (runtime/tooling as needed)
 
 ### Installation
 
@@ -85,38 +101,30 @@ src/
    cd vite-template
    ```
 
-2. **Install dependencies**
+2. **Install dependencies (Bun-only)**
 
    ```bash
-   npm install
-   # or
-   yarn install
-   # or
-   pnpm install
+   bun install
    ```
 
 3. **Start development server**
 
    ```bash
-   npm run dev
-   # or
-   yarn dev
-   # or
-   pnpm dev
+   bun run dev
    ```
 
 4. **Open your browser**
-   Navigate to `http://localhost:5173`
+   Navigate to `http://localhost:3000`
 
-## 📝 Available Scripts
+## 📝 Available Scripts (Bun)
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
-- `npm run lint:fix` - Fix ESLint errors
-- `npm run format` - Format code with Prettier
-- `npm run type-check` - Run TypeScript type checking
+- `bun run dev` — Start dev server
+- `bun run build` — Type-check and build production
+- `bun run preview` — Preview production build
+- `bun run lint` — Runs Prettier write, then ESLint
+- `bun run lint:fix` — ESLint --fix then Prettier write
+- `bun run format` — Prettier write
+- `bun run type-check` — TypeScript check only
 
 ## 🎯 Usage Guide
 
@@ -171,11 +179,13 @@ The template uses Tailwind CSS with ShadCN UI components:
 
 ### Theme Management
 
-Built-in dark/light mode switching:
+- Theme is persisted to `localStorage` and initialized from system preference.
+- The `<html>` element receives/removes the `dark` class automatically.
+- Toggle via Header button (calls `useAppStore().setTheme()`):
 
-```typescript
-// Toggle theme
-const { theme, toggleTheme } = useAppStore()
+```ts
+const { theme, setTheme } = useAppStore()
+setTheme(theme === 'light' ? 'dark' : 'light')
 ```
 
 ## 🔧 Configuration
@@ -202,9 +212,7 @@ theme: {
 
 ### TypeScript
 
-- Main config: `tsconfig.json`
-- App config: `tsconfig.app.json`
-- Node config: `tsconfig.node.json`
+- Single consolidated config: `tsconfig.json` (includes `src` and `vite.config.ts`)
 
 ## 🌟 Key Features Explained
 
@@ -240,17 +248,25 @@ theme: {
 ### Build for Production
 
 ```bash
-npm run build
+bun run build
 ```
 
 The `dist/` folder contains the production build.
 
-### Deploy to Netlify/Vercel
+### Docker (Nginx runtime)
+
+```bash
+docker build -t vite-template .
+docker run -p 8080:80 vite-template
+```
+
+Open http://localhost:8080
+
+### Netlify/Vercel
 
 1. Connect your repository
-2. Set build command: `npm run build`
-3. Set publish directory: `dist`
-4. Deploy!
+2. Build command: `bun run build`
+3. Publish directory: `dist`
 
 ## 🤝 Contributing
 
@@ -284,7 +300,7 @@ If you encounter any issues:
 
 **Happy coding! 🎉**
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for additional React-specific lint rules (optional):
 
 ```js
 // eslint.config.js
@@ -303,10 +319,7 @@ export default tseslint.config([
       reactDom.configs.recommended,
     ],
     languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
+      // parserOptions.project not required unless enabling typed linting rules that need it per file
       // other options...
     },
   },

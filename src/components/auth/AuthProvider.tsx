@@ -1,4 +1,5 @@
 import { type ReactNode, useEffect } from 'react'
+
 import { useAppStore } from '@/stores/useAppStore'
 // TODO : Implement auth provider Completely
 interface AuthProviderProps {
@@ -25,5 +26,5 @@ export function AuthProvider({ children }: AuthProviderProps) {
     checkAuthState()
   }, [setUser])
 
-  return <>{children}</>
+  return children
 }

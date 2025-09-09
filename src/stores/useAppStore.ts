@@ -1,6 +1,24 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 
+function getInitialTheme(): 'light' | 'dark' {
+  if (typeof window === 'undefined') return 'light'
+  const stored = localStorage.getItem('theme') as 'light' | 'dark' | null
+  if (stored === 'light' || stored === 'dark') return stored
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+  return prefersDark ? 'dark' : 'light'
+}
+
+function applyTheme(theme: 'light' | 'dark'): void {
+  if (typeof document === 'undefined') return
+  const root = document.documentElement
+  if (theme === 'dark') {
+    root.classList.add('dark')
+  } else {
+    root.classList.remove('dark')
+  }
+}
+
 interface AppState {
   theme: 'light' | 'dark'
   setTheme: (theme: 'light' | 'dark') => void
@@ -20,8 +38,12 @@ interface AppState {
 export const useAppStore = create<AppState>()(
   devtools(
     (set) => ({
-      theme: 'light',
-      setTheme: (theme) => set({ theme }),
+      theme: getInitialTheme(),
+      setTheme: (theme) => {
+        applyTheme(theme)
+        localStorage.setItem('theme', theme)
+        set({ theme })
+      },
       user: {
         id: null,
         name: null,
@@ -40,3 +62,9 @@ export const useAppStore = create<AppState>()(
     }
   )
 )
+
+// Apply theme on initial load
+if (typeof window !== 'undefined') {
+  const current = getInitialTheme()
+  applyTheme(current)
+}

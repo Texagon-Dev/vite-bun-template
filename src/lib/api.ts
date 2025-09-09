@@ -95,14 +95,16 @@ class ApiClient {
   async post<T>(endpoint: string, data?: unknown): Promise<ApiResponse<T>> {
     return this.request<T>(endpoint, {
       method: 'POST',
-      body: data ? JSON.stringify(data) : undefined,
+      body:
+        data !== undefined && data !== null ? JSON.stringify(data) : undefined,
     })
   }
 
   async put<T>(endpoint: string, data?: unknown): Promise<ApiResponse<T>> {
     return this.request<T>(endpoint, {
       method: 'PUT',
-      body: data ? JSON.stringify(data) : undefined,
+      body:
+        data !== undefined && data !== null ? JSON.stringify(data) : undefined,
     })
   }
 
