@@ -1,5 +1,6 @@
-import { Component, type ReactNode, type ErrorInfo } from 'react'
 import { AlertTriangle } from 'lucide-react'
+import { Component, type ReactNode, type ErrorInfo } from 'react'
+
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -36,7 +37,7 @@ export class ErrorBoundary extends Component<
     console.error('Error caught by boundary:', error, errorInfo)
   }
 
-  render() {
+  async render() {
     if (this.state.hasError) {
       if (this.props.fallback) {
         return this.props.fallback

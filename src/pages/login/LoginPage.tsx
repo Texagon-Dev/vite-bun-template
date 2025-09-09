@@ -1,6 +1,7 @@
+import { Eye, EyeOff, Mail, Lock, AlertCircle, Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Eye, EyeOff, Mail, Lock, AlertCircle, Loader2 } from 'lucide-react'
+
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -9,8 +10,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { useAppStore } from '@/stores/useAppStore'
 import { cn } from '@/lib/utils'
+import { useAppStore } from '@/stores/useAppStore'
 
 interface FormErrors {
   email?: string
@@ -63,7 +64,7 @@ export function LoginPage() {
         setUser({
           id: '1',
           name: 'Demo User',
-          email: email,
+          email,
         })
         if (rememberMe) {
           localStorage.setItem('rememberMe', 'true')
@@ -274,7 +275,7 @@ export function LoginPage() {
             {/* Sign Up Link */}
             <div className="border-t pt-4 text-center">
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                Don't have an account?{' '}
+                Don&apos;t have an account?{' '}
                 <Link
                   to="/signup"
                   className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"

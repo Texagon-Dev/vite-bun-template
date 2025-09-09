@@ -1,5 +1,3 @@
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
 import {
   Eye,
   EyeOff,
@@ -10,6 +8,9 @@ import {
   CheckCircle,
   Loader2,
 } from 'lucide-react'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -18,8 +19,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { useAppStore } from '@/stores/useAppStore'
 import { cn } from '@/lib/utils'
+import { useAppStore } from '@/stores/useAppStore'
 
 interface FormErrors {
   name?: string
@@ -155,7 +156,7 @@ export function SignupPage() {
       setUser({
         id: Date.now().toString(),
         name: name.trim(),
-        email: email,
+        email,
       })
 
       navigate('/dashboard')
