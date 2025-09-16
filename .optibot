@@ -12,7 +12,7 @@
   },
   "summary": {
     "auto": true,
-    "level": "basic"
+    "level": "detailed"
   },
   "enableCIFixer": false
 }
