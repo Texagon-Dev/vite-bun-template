@@ -1,6 +1,6 @@
+import { Link } from '@tanstack/react-router'
 import { Eye, EyeOff, Mail, Lock, AlertCircle, Loader2 } from 'lucide-react'
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -28,7 +28,6 @@ export function LoginPage() {
   const [rememberMe, setRememberMe] = useState(false)
 
   const { setUser, setIsLoading: setGlobalLoading } = useAppStore()
-  const navigate = useNavigate()
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {}
@@ -70,8 +69,6 @@ export function LoginPage() {
           localStorage.setItem('rememberMe', 'true')
           localStorage.setItem('userEmail', email)
         }
-
-        navigate('/dashboard')
       } else {
         setErrors({
           general: 'Invalid email or password. Try demo@example.com / password',
@@ -248,7 +245,7 @@ export function LoginPage() {
                   </label>
                 </div>
                 <Link
-                  to="/forgot-password"
+                  to="/"
                   className="text-sm text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
                 >
                   Forgot password?
