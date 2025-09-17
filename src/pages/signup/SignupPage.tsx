@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router'
 import {
   Eye,
   EyeOff,
@@ -9,7 +10,6 @@ import {
   Loader2,
 } from 'lucide-react'
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -49,7 +49,6 @@ export function SignupPage() {
   const [errors, setErrors] = useState<FormErrors>({})
 
   const { setUser, setIsLoading: setGlobalLoading } = useAppStore()
-  const navigate = useNavigate()
 
   const calculatePasswordStrength = (password: string): PasswordStrength => {
     let score = 0
@@ -158,8 +157,6 @@ export function SignupPage() {
         name: name.trim(),
         email,
       })
-
-      navigate('/dashboard')
     } catch (error) {
       setErrors({ general: 'An error occurred. Please try again.' })
       console.error(error)
@@ -431,14 +428,14 @@ export function SignupPage() {
                   >
                     I agree to the{' '}
                     <Link
-                      to="/terms"
+                      to="/"
                       className="text-purple-600 hover:text-purple-500 dark:text-purple-400 dark:hover:text-purple-300"
                     >
                       Terms of Service
                     </Link>{' '}
                     and{' '}
                     <Link
-                      to="/privacy"
+                      to="/"
                       className="text-purple-600 hover:text-purple-500 dark:text-purple-400 dark:hover:text-purple-300"
                     >
                       Privacy Policy
